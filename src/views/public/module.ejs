@@ -1,0 +1,19 @@
+<%- include('../partials/head', { title: module.title }) %>
+<section class="card space-y-3">
+  <p class="text-sm text-slate-600">Modul <%= step %>/<%= total %></p>
+  <h1 class="text-3xl font-bold"><%= module.title %></h1>
+  <p><%= module.story %></p>
+  <div class="bg-green-100 p-3 rounded">
+    <strong>Co je správně:</strong>
+    <p><%= module.correct_action %></p>
+  </div>
+  <ul class="list-disc pl-6">
+    <li><%= module.tip1 %></li>
+    <li><%= module.tip2 %></li>
+  </ul>
+  <div class="flex gap-3">
+    <a class="btn btn-secondary" href="<%= step === 1 ? '/pre-test' : '/kurz/' + (step - 1) %>">Zpět</a>
+    <a class="btn btn-primary" href="<%= step === total ? '/post-test' : '/kurz/' + (step + 1) %>">Další</a>
+  </div>
+</section>
+<%- include('../partials/foot') %>

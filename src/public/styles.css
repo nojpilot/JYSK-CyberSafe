@@ -1,0 +1,6 @@
+body.senior-mode { font-size: 1.2rem; }
+body.senior-mode button, body.senior-mode a { font-size: 1.1em; }
+.card { background:white; border-radius:0.75rem; padding:1rem; box-shadow:0 1px 4px rgba(0,0,0,.1); }
+.btn { display:inline-block; padding:.8rem 1.2rem; border-radius:.6rem; font-weight:700; }
+.btn-primary { background:#1d4ed8; color:white; }
+.btn-secondary { background:#e2e8f0; color:#111827; }

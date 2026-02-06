@@ -1,0 +1,22 @@
+<%- include('../partials/head', { title: 'Výsledek' }) %>
+<section class="card space-y-3">
+  <h1 class="text-3xl font-bold">Výsledek</h1>
+  <p>Pre-test: <strong><%= session.pre_score %></strong></p>
+  <p>Post-test: <strong><%= session.post_score %></strong></p>
+  <p>Zlepšení: <strong><%= session.improvement %></strong> bodů</p>
+</section>
+<section class="card mt-4">
+  <h2 class="text-2xl font-semibold mb-2">Doporučení podle chyb</h2>
+  <% if (recommendations.length === 0) { %>
+    <p>Skvělá práce! Bez doporučení navíc.</p>
+  <% } else { %>
+    <ul class="list-disc pl-6">
+      <% recommendations.forEach((r) => { %><li><%= r %></li><% }) %>
+    </ul>
+  <% } %>
+  <div class="flex gap-3 mt-4">
+    <a href="/certifikat" class="btn btn-primary">Získat certifikát</a>
+    <a href="/bezpecne-i-doma" class="btn btn-secondary">Bezpečně i doma</a>
+  </div>
+</section>
+<%- include('../partials/foot') %>
