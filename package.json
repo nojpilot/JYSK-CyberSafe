@@ -1,0 +1,27 @@
+{
+  "name": "jysk-cybersafe",
+  "version": "1.0.0",
+  "description": "JYSK CyberSafe training app",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node src/server.js",
+    "migrate": "node src/scripts/migrate.js",
+    "seed": "node src/scripts/seed.js",
+    "create-admin": "node src/scripts/createAdmin.js",
+    "test": "node src/scripts/smokeTest.js"
+  },
+  "dependencies": {
+    "argon2": "^0.41.1",
+    "better-sqlite3": "^11.7.0",
+    "cookie-parser": "^1.4.7",
+    "csurf": "^1.11.0",
+    "ejs": "^3.1.10",
+    "express": "^4.21.2",
+    "express-rate-limit": "^7.5.0",
+    "helmet": "^8.0.0",
+    "pdfkit": "^0.15.1",
+    "uuid": "^11.0.5",
+    "zod": "^3.24.1"
+  }
+}

@@ -1,0 +1,18 @@
+<%- include('../partials/head', { title: 'JYSK CyberSafe | Start' }) %>
+<section class="card space-y-4">
+  <h1 class="text-3xl font-bold">Bezpečná směna během 5–10 minut</h1>
+  <p>Krátké školení pro zaměstnance prodejny: phishing, podvodné telefonáty, USB, sdílené počítače a ochrana zákaznických údajů.</p>
+  <ul class="list-disc pl-6 space-y-1">
+    <li>Délka: <%= course.duration %></li>
+    <li>Jednoduchý jazyk a praktické scénáře</li>
+    <li>Anonymní vyhodnocení zlepšení (bez osobních údajů)</li>
+  </ul>
+  <a href="/pre-test" class="btn btn-primary">Začít</a>
+</section>
+<section class="card mt-4">
+  <h2 class="text-2xl font-semibold mb-2">5 pravidel bezpečné směny</h2>
+  <ul class="list-disc pl-6 space-y-1">
+    <% course.rules.forEach((r) => { %><li><%= r %></li><% }) %>
+  </ul>
+</section>
+<%- include('../partials/foot') %>

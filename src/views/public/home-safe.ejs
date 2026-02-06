@@ -1,0 +1,9 @@
+<%- include('../partials/head', { title: 'Bezpečně i doma' }) %>
+<section class="card">
+  <h1 class="text-3xl font-bold mb-3">Bezpečně i doma</h1>
+  <ul class="list-disc pl-6 space-y-2">
+    <% tips.forEach((tip) => { %><li><%= tip %></li><% }) %>
+  </ul>
+  <a href="/" class="btn btn-primary mt-4">Hotovo</a>
+</section>
+<%- include('../partials/foot') %>

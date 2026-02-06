@@ -1,0 +1,29 @@
+<%- include('../partials/head', { title: 'Admin dashboard' }) %>
+<section class="card">
+  <h1 class="text-3xl font-bold">Admin dashboard</h1>
+  <% if (demoMode) { %><p class="bg-yellow-100 p-2 mt-2 rounded">DEMO režim: CRUD je zamčený (read-only).</p><% } %>
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-3 mt-3">
+    <div class="card"><p>Sessions</p><p class="text-2xl font-bold"><%= summary.sessions %></p></div>
+    <div class="card"><p>Dokončení</p><p class="text-2xl font-bold"><%= summary.completed %></p></div>
+    <div class="card"><p>Průměrné zlepšení</p><p class="text-2xl font-bold"><%= summary.avg_improvement ?? 0 %></p></div>
+  </div>
+</section>
+<section class="card mt-4">
+  <h2 class="text-xl font-semibold">Nejčastější chyby (post-test)</h2>
+  <ul class="list-disc pl-6">
+    <% topWrong.forEach((w) => { %><li><%= w.question_key %> – <%= w.mistakes %>×</li><% }) %>
+  </ul>
+</section>
+<section class="card mt-4">
+  <h2 class="text-xl font-semibold">Poslední audit logy</h2>
+  <ul class="text-sm">
+    <% recentLogs.forEach((l) => { %><li><%= l.created_at %> | <%= l.admin_username %> | <%= l.action %> | <%= l.detail %></li><% }) %>
+  </ul>
+  <div class="flex gap-3 mt-4">
+    <a class="btn btn-primary" href="/admin/questions">Otázky</a>
+    <a class="btn btn-primary" href="/admin/modules">Moduly</a>
+    <a class="btn btn-secondary" href="/admin/stats.csv">Export CSV</a>
+    <a class="btn btn-secondary" href="/admin/logout">Odhlásit</a>
+  </div>
+</section>
+<%- include('../partials/foot') %>
