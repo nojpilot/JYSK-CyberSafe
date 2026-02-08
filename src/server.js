@@ -7,12 +7,14 @@ const rateLimit = require('express-rate-limit');
 
 require('./scripts/migrate');
 
-const publicRoutes = require('./routes/public');
 const adminRoutes = require('./routes/admin');
+const apiRoutes = require('./routes/api');
 const { ensureAnonSession } = require('./middleware/session');
 
 const app = express();
 const port = process.env.PORT || 3000;
+
+app.disable('x-powered-by');
 
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
@@ -21,8 +23,12 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      styleSrc: ["'self'", "'unsafe-inline'", 'https://cdn.jsdelivr.net'],
-      scriptSrc: ["'self'", "'unsafe-inline'", 'https://cdn.tailwindcss.com'],
+      baseUri: ["'self'"],
+      frameAncestors: ["'none'"],
+      styleSrc: ["'self'"],
+      styleSrcAttr: ["'unsafe-inline'"],
+      scriptSrc: ["'self'"],
+      scriptSrcAttr: ["'none'"],
       imgSrc: ["'self'", 'data:'],
       objectSrc: ["'none'"]
     }
@@ -42,7 +48,7 @@ app.use(publicLimiter);
 app.use(ensureAnonSession);
 
 app.get('/health', (_, res) => res.json({ status: 'ok' }));
-app.use('/', publicRoutes);
+app.use('/api', apiRoutes);
 
 const csrfProtection = csrf({ cookie: { httpOnly: true, sameSite: 'strict', secure: process.env.NODE_ENV === 'production' } });
 app.use('/admin', adminLimiter, csrfProtection, (req, res, next) => {
@@ -50,10 +56,14 @@ app.use('/admin', adminLimiter, csrfProtection, (req, res, next) => {
   next();
 }, adminRoutes);
 
+app.use((req, res) => {
+  res.status(404).send('Not found');
+});
+
 app.use((err, req, res, next) => {
   if (err.code === 'EBADCSRFTOKEN') return res.status(403).send('Neplatný CSRF token.');
   console.error(err);
-  res.status(500).send('Nastala chyba serveru.');
+  res.status(500).send('Server error');
 });
 
 app.listen(port, () => {

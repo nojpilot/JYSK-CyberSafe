@@ -1,23 +1,26 @@
 <%- include('../partials/head', { title: 'Admin moduly' }) %>
 <section class="card">
   <h1 class="text-2xl font-bold">Moduly (CRUD)</h1>
-  <form method="post" class="grid grid-cols-1 gap-2 mt-3">
+  <form method="post" class="mt-3">
     <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-    <input name="slug" class="border p-2 rounded" placeholder="slug" required>
-    <input name="title" class="border p-2 rounded" placeholder="Název" required>
-    <textarea name="story" class="border p-2 rounded" placeholder="Příběh" required></textarea>
-    <input name="correct_action" class="border p-2 rounded" placeholder="Co je správně" required>
-    <input name="tip1" class="border p-2 rounded" placeholder="Tip 1" required>
-    <input name="tip2" class="border p-2 rounded" placeholder="Tip 2" required>
-    <input name="sort_order" type="number" min="1" value="1" class="border p-2 rounded">
+    <input name="slug" placeholder="slug" required>
+    <input name="title" placeholder="Název" required>
+    <input name="image" placeholder="/static/images/..." >
+    <textarea name="story" placeholder="Příběh" required></textarea>
+    <input name="correct_action" placeholder="Co je správně" required>
+    <input name="tip1" placeholder="Tip 1" required>
+    <input name="tip2" placeholder="Tip 2" required>
+    <input name="sort_order" type="number" min="1" value="1">
     <button class="btn btn-primary" type="submit">Uložit modul</button>
   </form>
 </section>
 <section class="card mt-4">
   <ul>
     <% modules.forEach((m) => { %>
-      <li class="border-t py-2"><strong><%= m.sort_order %>. <%= m.title %></strong> (<%= m.slug %>)
-        <form method="post" action="/admin/modules/<%= m.id %>/delete" class="inline" onsubmit="return confirm('Smazat?')">
+      <li class="mt-3">
+        <strong><%= m.sort_order %>. <%= m.title %></strong> (<%= m.slug %>)
+        <% if (m.image) { %><span class="text-sm text-slate-300"> • <%= m.image %></span><% } %>
+        <form method="post" action="/admin/modules/<%= m.id %>/delete" class="inline" data-confirm="Smazat?">
           <input type="hidden" name="_csrf" value="<%= csrfToken %>">
           <button class="text-red-600" <%= demoMode ? 'disabled' : '' %>>Smazat</button>
         </form>

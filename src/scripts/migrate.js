@@ -1,4 +1,5 @@
 const db = require('../config/db');
+const { seedDb } = require('../services/seedDb');
 
 db.exec(`
 CREATE TABLE IF NOT EXISTS modules (
@@ -9,6 +10,7 @@ CREATE TABLE IF NOT EXISTS modules (
   correct_action TEXT NOT NULL,
   tip1 TEXT NOT NULL,
   tip2 TEXT NOT NULL,
+  image TEXT,
   sort_order INTEGER NOT NULL DEFAULT 0,
   created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
   updated_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
@@ -52,11 +54,32 @@ CREATE TABLE IF NOT EXISTS answers (
   FOREIGN KEY(session_id) REFERENCES sessions(session_id) ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS feedback (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  session_id TEXT NOT NULL,
+  q1 TEXT NOT NULL,
+  q2 TEXT NOT NULL,
+  q3 TEXT NOT NULL,
+  q4 TEXT NOT NULL,
+  comment TEXT,
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY(session_id) REFERENCES sessions(session_id) ON DELETE CASCADE
+);
+
 CREATE TABLE IF NOT EXISTS admins (
   id INTEGER PRIMARY KEY AUTOINCREMENT,
   username TEXT UNIQUE NOT NULL,
   password_hash TEXT NOT NULL,
   created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS admin_sessions (
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  token TEXT UNIQUE NOT NULL,
+  username TEXT NOT NULL,
+  created_at TEXT NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  expires_at TEXT NOT NULL,
+  FOREIGN KEY(username) REFERENCES admins(username) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS audit_logs (
@@ -68,4 +91,18 @@ CREATE TABLE IF NOT EXISTS audit_logs (
 );
 `);
 
+const moduleCols = db.prepare(`PRAGMA table_info(modules)`).all();
+const hasImage = moduleCols.some((c) => c.name === 'image');
+if (!hasImage) {
+  db.exec('ALTER TABLE modules ADD COLUMN image TEXT');
+}
+
 console.log('Migration completed.');
+
+// Auto-seed only when tables are empty (keeps admin edits intact).
+try {
+  const r = seedDb({ mode: 'if-empty' });
+  if (r.seeded) console.log(`Auto-seed completed. (modules: ${r.modules}, questions: ${r.questions})`);
+} catch (err) {
+  console.error(err);
+}

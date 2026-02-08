@@ -1,14 +1,3 @@
   </main>
-  <script>
-    const toggle = document.getElementById('seniorToggle');
-    const body = document.getElementById('appBody');
-    if (localStorage.getItem('seniorMode') === 'on') body.classList.add('senior-mode');
-    if (toggle) {
-      toggle.addEventListener('click', () => {
-        body.classList.toggle('senior-mode');
-        localStorage.setItem('seniorMode', body.classList.contains('senior-mode') ? 'on' : 'off');
-      });
-    }
-  </script>
 </body>
 </html>

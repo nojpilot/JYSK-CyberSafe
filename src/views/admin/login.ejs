@@ -1,13 +1,14 @@
 <%- include('../partials/head', { title: 'Admin login' }) %>
-<section class="card max-w-xl mx-auto space-y-3">
-  <h1 class="text-2xl font-bold">Admin přihlášení</h1>
-  <% if (demoMode) { %><p class="bg-yellow-100 p-2 rounded">DEMO režim: přihlášení je vypnuto, admin je read-only.</p><% } %>
-  <% if (error) { %><p class="bg-red-100 p-2 rounded"><%= error %></p><% } %>
-  <form method="post" class="space-y-2">
-    <input type="hidden" name="_csrf" value="<%= csrfToken %>">
-    <input name="username" class="w-full border p-2 rounded" placeholder="Uživatelské jméno" required>
-    <input name="password" type="password" class="w-full border p-2 rounded" placeholder="Heslo" required>
-    <button class="btn btn-primary" type="submit">Přihlásit</button>
+<section class="card">
+  <h1 class="text-3xl font-bold">Admin login</h1>
+  <% if (error) { %><p class="text-slate-300 mt-3"><%= error %></p><% } %>
+  <% if (demoMode) { %><p class="text-slate-300 mt-3">DEMO režim: přihlášení je vypnuto.</p><% } %>
+  <form method="post" class="mt-3" action="/admin/login">
+    <div class="flex gap-3">
+      <input name="username" placeholder="Uživatel" required>
+      <input name="password" placeholder="Heslo" type="password" required>
+      <button class="btn btn-primary" type="submit">Přihlásit</button>
+    </div>
   </form>
 </section>
 <%- include('../partials/foot') %>

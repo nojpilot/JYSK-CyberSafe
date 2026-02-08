@@ -1,4 +1,5 @@
 const express = require('express');
+const crypto = require('crypto');
 const argon2 = require('argon2');
 const { z } = require('zod');
 const db = require('../config/db');
@@ -11,7 +12,7 @@ function logAction(user, action, detail) {
 }
 
 router.get('/login', (req, res) => {
-  res.render('admin/login', { error: null, demoMode: process.env.DEMO_MODE === 'true' });
+  res.render('admin/login', { error: null, demoMode: process.env.DEMO_MODE === 'true', bodyClass: 'admin-theme' });
 });
 
 router.post('/login', async (req, res) => {
@@ -19,26 +20,39 @@ router.post('/login', async (req, res) => {
 
   const schema = z.object({ username: z.string().min(3), password: z.string().min(8) });
   const parsed = schema.safeParse(req.body);
-  if (!parsed.success) return res.render('admin/login', { error: 'Neplatné přihlášení.', demoMode: false });
+  if (!parsed.success) return res.render('admin/login', { error: 'Neplatné přihlášení.', demoMode: false, bodyClass: 'admin-theme' });
 
   const admin = db.prepare('SELECT * FROM admins WHERE username=?').get(parsed.data.username);
-  if (!admin) return res.render('admin/login', { error: 'Neplatné přihlašovací údaje.', demoMode: false });
+  if (!admin) return res.render('admin/login', { error: 'Neplatné přihlašovací údaje.', demoMode: false, bodyClass: 'admin-theme' });
   const ok = await argon2.verify(admin.password_hash, parsed.data.password);
-  if (!ok) return res.render('admin/login', { error: 'Neplatné přihlašovací údaje.', demoMode: false });
+  if (!ok) return res.render('admin/login', { error: 'Neplatné přihlašovací údaje.', demoMode: false, bodyClass: 'admin-theme' });
 
-  res.cookie('admin_session', admin.username, {
+  const token = crypto.randomBytes(32).toString('hex');
+  db.transaction(() => {
+    db.prepare('DELETE FROM admin_sessions WHERE username = ?').run(admin.username);
+    db.prepare('INSERT INTO admin_sessions (token, username, expires_at) VALUES (?, ?, datetime(\"now\", \"+8 hours\"))')
+      .run(token, admin.username);
+  })();
+
+  res.cookie('admin_session', token, {
     httpOnly: true,
     sameSite: 'strict',
     secure: process.env.NODE_ENV === 'production',
-    maxAge: 1000 * 60 * 60 * 8
+    maxAge: 1000 * 60 * 60 * 8,
+    path: '/admin'
   });
   logAction(admin.username, 'login', 'Admin logged in');
   res.redirect('/admin');
 });
 
 router.get('/logout', (req, res) => {
-  if (req.admin) logAction(req.admin.username, 'logout', 'Admin logged out');
-  res.clearCookie('admin_session');
+  const token = req.cookies.admin_session;
+  if (token) {
+    const row = db.prepare('SELECT username FROM admin_sessions WHERE token = ?').get(token);
+    if (row?.username) logAction(row.username, 'logout', 'Admin logged out');
+    db.prepare('DELETE FROM admin_sessions WHERE token = ?').run(token);
+  }
+  res.clearCookie('admin_session', { path: '/admin' });
   res.redirect('/admin/login');
 });
 
@@ -63,59 +77,12 @@ router.get('/', (req, res) => {
 
   const recentLogs = db.prepare('SELECT * FROM audit_logs ORDER BY id DESC LIMIT 10').all();
 
-  res.render('admin/dashboard', { summary, topWrong, recentLogs, demoMode: process.env.DEMO_MODE === 'true' });
-});
-
-router.get('/questions', (req, res) => {
-  const questions = db.prepare('SELECT * FROM questions ORDER BY category, sort_order').all();
-  res.render('admin/questions', { questions, demoMode: process.env.DEMO_MODE === 'true' });
-});
-
-router.post('/questions', (req, res) => {
-  if (process.env.DEMO_MODE === 'true') return res.status(403).send('DEMO režim: pouze čtení');
-  const schema = z.object({
-    category: z.enum(['pre', 'post']),
-    key: z.string().min(1),
-    question_text: z.string().min(5),
-    option_a: z.string().min(1),
-    option_b: z.string().min(1),
-    option_c: z.string().min(1),
-    correct_option: z.enum(['A', 'B', 'C']),
-    explanation: z.string().min(2),
-    topic_tag: z.string().min(2),
-    sort_order: z.coerce.number().int().min(1)
-  });
-  const parsed = schema.safeParse(req.body);
-  if (!parsed.success) return res.status(400).send('Neplatná data otázky.');
-  db.prepare(`
-    INSERT INTO questions (category,key,question_text,option_a,option_b,option_c,correct_option,explanation,topic_tag,sort_order)
-    VALUES (@category,@key,@question_text,@option_a,@option_b,@option_c,@correct_option,@explanation,@topic_tag,@sort_order)
-    ON CONFLICT(category,key) DO UPDATE SET
-    question_text=excluded.question_text,
-    option_a=excluded.option_a,
-    option_b=excluded.option_b,
-    option_c=excluded.option_c,
-    correct_option=excluded.correct_option,
-    explanation=excluded.explanation,
-    topic_tag=excluded.topic_tag,
-    sort_order=excluded.sort_order,
-    updated_at=CURRENT_TIMESTAMP
-  `).run(parsed.data);
-
-  logAction(req.admin.username, 'question_upsert', `${parsed.data.category}:${parsed.data.key}`);
-  res.redirect('/admin/questions');
-});
-
-router.post('/questions/:id/delete', (req, res) => {
-  if (process.env.DEMO_MODE === 'true') return res.status(403).send('DEMO režim: pouze čtení');
-  db.prepare('DELETE FROM questions WHERE id=?').run(req.params.id);
-  logAction(req.admin.username, 'question_delete', `id:${req.params.id}`);
-  res.redirect('/admin/questions');
+  res.render('admin/dashboard', { summary, topWrong, recentLogs, demoMode: process.env.DEMO_MODE === 'true', bodyClass: 'admin-theme' });
 });
 
 router.get('/modules', (req, res) => {
   const modules = db.prepare('SELECT * FROM modules ORDER BY sort_order').all();
-  res.render('admin/modules', { modules, demoMode: process.env.DEMO_MODE === 'true' });
+  res.render('admin/modules', { modules, demoMode: process.env.DEMO_MODE === 'true', bodyClass: 'admin-theme' });
 });
 
 router.post('/modules', (req, res) => {
@@ -127,19 +94,21 @@ router.post('/modules', (req, res) => {
     correct_action: z.string().min(5),
     tip1: z.string().min(5),
     tip2: z.string().min(5),
+    image: z.string().max(200).optional().or(z.literal('')),
     sort_order: z.coerce.number().int().min(1)
   });
   const parsed = schema.safeParse(req.body);
   if (!parsed.success) return res.status(400).send('Neplatná data modulu.');
   db.prepare(`
-    INSERT INTO modules (slug,title,story,correct_action,tip1,tip2,sort_order)
-    VALUES (@slug,@title,@story,@correct_action,@tip1,@tip2,@sort_order)
+    INSERT INTO modules (slug,title,story,correct_action,tip1,tip2,image,sort_order)
+    VALUES (@slug,@title,@story,@correct_action,@tip1,@tip2,@image,@sort_order)
     ON CONFLICT(slug) DO UPDATE SET
       title=excluded.title,
       story=excluded.story,
       correct_action=excluded.correct_action,
       tip1=excluded.tip1,
       tip2=excluded.tip2,
+      image=excluded.image,
       sort_order=excluded.sort_order,
       updated_at=CURRENT_TIMESTAMP
   `).run(parsed.data);

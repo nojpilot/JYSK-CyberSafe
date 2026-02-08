@@ -1,0 +1,34 @@
+<svg width="420" height="280" viewBox="0 0 420 280" fill="none" xmlns="http://www.w3.org/2000/svg" shape-rendering="geometricPrecision">
+  <defs>
+    <linearGradient id="panel" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FFFFFF" stop-opacity="0.14"/>
+      <stop offset="1" stop-color="#93C5FD" stop-opacity="0.06"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="12" stdDeviation="14" flood-color="#020617" flood-opacity="0.45"/>
+    </filter>
+  </defs>
+
+  <rect x="18" y="18" width="384" height="244" rx="26" fill="url(#panel)" stroke="#FFFFFF" stroke-opacity="0.18"/>
+  <circle cx="90" cy="58" r="30" fill="#7DD3FC" opacity="0.08"/>
+  <circle cx="336" cy="220" r="34" fill="#FDE68A" opacity="0.08"/>
+
+  <g filter="url(#shadow)" transform="translate(132 46) scale(0.35)">
+    <path d="M344.467 0H167.533C143.448 0 123.853 19.595 123.853 43.68V468.32C123.853 492.405 143.448 512 167.533 512H344.467C368.552 512 388.147 492.405 388.147 468.32V43.68C388.147 19.595 368.552 0 344.467 0Z" stroke="#a6a6a6ff" stroke-opacity="0.85" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M282.54 35.387H229.46" stroke="#a6a6a6ff" stroke-opacity="0.75" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M185.227 389.253H167.533" stroke="#a6a6a6ff" stroke-opacity="0.7" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M238.307 389.253H220.614" stroke="#a6a6a6ff" stroke-opacity="0.7" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M291.387 389.253H273.694" stroke="#a6a6a6ff" stroke-opacity="0.7" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M344.467 389.253H326.774" stroke="#a6a6a6ff" stroke-opacity="0.7" stroke-width="10" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M256 452.285C247.159 452.285 239.965 459.478 239.965 468.32C239.965 477.161 247.159 484.355 256 484.355C264.841 484.355 272.035 477.161 272.035 468.32C272.035 459.478 264.841 452.285 256 452.285Z" stroke="#a6a6a6ff" stroke-opacity="0.65" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M238.307 291.94H167.533V353.314H238.307V291.94Z" stroke="#a6a6a6ff" stroke-opacity="0.7" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M238.307 203.473H167.533V264.847H238.307V203.473Z" stroke="#a6a6a6ff" stroke-opacity="0.7" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M238.307 115.006H167.533V176.38H238.307V115.006Z" stroke="#a6a6a6ff" stroke-opacity="0.7" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M344.467 123.853H273.694" stroke="#a6a6a6ff" stroke-opacity="0.7" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M309.08 159.24H273.694" stroke="#a6a6a6ff" stroke-opacity="0.7" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M344.467 212.32H273.694" stroke="#a6a6a6ff" stroke-opacity="0.7" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M309.08 247.706H273.694" stroke="#a6a6a6ff" stroke-opacity="0.7" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M344.467 300.786H273.694" stroke="#a6a6a6ff" stroke-opacity="0.7" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+    <path d="M309.08 336.173H273.694" stroke="#a6a6a6ff" stroke-opacity="0.7" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
+  </g>
+</svg>

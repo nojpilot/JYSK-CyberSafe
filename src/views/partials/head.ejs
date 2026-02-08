@@ -3,15 +3,20 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title><%= title || 'JYSK CyberSafe' %></title>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <title><%= typeof title !== 'undefined' && title ? title : 'JYSK CyberSafe Admin' %></title>
   <link rel="stylesheet" href="/static/styles.css" />
 </head>
-<body class="bg-slate-100 text-slate-900" id="appBody">
-  <header class="bg-blue-900 text-white p-4">
-    <div class="max-w-4xl mx-auto flex items-center justify-between">
-      <a href="/" class="font-bold text-xl">JYSK CyberSafe</a>
-      <button id="seniorToggle" class="bg-yellow-300 text-slate-900 px-3 py-2 rounded font-semibold">Režim seniorní čtení</button>
+<body class="app-body admin-theme" id="appBody">
+  <header class="site-header">
+    <div class="max-w-5xl mx-auto flex items-center justify-between">
+      <a href="/admin" class="brand">
+        <img class="brand-logo" src="/static/images/jysk-logo.svg" alt="JYSK" />
+        <span>JYSK CyberSafe Admin</span>
+      </a>
+      <nav class="hidden md:flex items-center gap-4 text-sm">
+        <a href="/admin/modules" class="nav-link">Moduly</a>
+        <a href="/admin/stats.csv" class="nav-link">Export CSV</a>
+      </nav>
     </div>
   </header>
-  <main class="max-w-4xl mx-auto p-4">
+  <main class="max-w-5xl mx-auto p-4">
