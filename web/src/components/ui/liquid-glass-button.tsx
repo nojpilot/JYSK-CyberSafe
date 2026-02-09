@@ -26,21 +26,27 @@ const liquidbuttonVariants = cva(
   }
 )
 
-export interface LiquidButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement>,
-    React.AnchorHTMLAttributes<HTMLAnchorElement>,
-    VariantProps<typeof liquidbuttonVariants> {
+type LiquidButtonBaseProps = VariantProps<typeof liquidbuttonVariants> & {
   href?: string
+  children?: React.ReactNode
+  className?: string
 }
 
-export function LiquidButton({
-  className,
-  variant,
-  size,
-  href,
-  children,
-  ...props
-}: LiquidButtonProps) {
+type LiquidButtonLinkProps = LiquidButtonBaseProps &
+  Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, 'type' | 'href'> & {
+    href: string
+  }
+
+type LiquidButtonButtonProps = LiquidButtonBaseProps &
+  React.ButtonHTMLAttributes<HTMLButtonElement> & {
+    href?: undefined
+  }
+
+export type LiquidButtonProps = LiquidButtonLinkProps | LiquidButtonButtonProps
+
+export function LiquidButton(props: LiquidButtonProps) {
+  const { className, variant, size, href, children, ...rest } =
+    props as LiquidButtonBaseProps & Record<string, unknown>
   const classNames = cn('relative', liquidbuttonVariants({ variant, size, className }))
   const content = (
     <>
@@ -57,16 +63,19 @@ export function LiquidButton({
   )
 
   if (href) {
-    const { onClick, ...rest } = props
     return (
-      <Link href={href} className={classNames} onClick={onClick as any} {...(rest as any)}>
+      <Link href={href} className={classNames} {...(rest as React.AnchorHTMLAttributes<HTMLAnchorElement>)}>
         {content}
       </Link>
     )
   }
 
   return (
-    <button data-slot="button" className={classNames} {...props}>
+    <button
+      data-slot="button"
+      className={classNames}
+      {...(rest as React.ButtonHTMLAttributes<HTMLButtonElement>)}
+    >
       {content}
     </button>
   )
