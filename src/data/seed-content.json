@@ -1,0 +1,329 @@
+{
+  "course": {
+    "duration": "7–10 minut",
+    "storyline": "Typická směna v JYSKu. Pět situací, které se opravdu dějí.",
+    "mission": "Chraň BO, StoreFront, pokladnu i zákazníky. Ověřuj, nespěchej, neklikej.",
+    "teamMotto": "Když něco tlačí na čas, je to podezřelé. Ověř a máš klid.",
+    "rules": [
+      "Než klikneš v e‑mailu nebo SMS, ověř odesílatele a adresu webu.",
+      "Ověřovací kódy z SMS nikdy nikomu. Ani ‚IT podpoře‘.",
+      "Neznámé USB nebo QR ze skladu neotvírat, nahlásit vedoucímu.",
+      "BO/StoreFront i pokladnu vždy zamknout při odchodu.",
+      "Zákaznické údaje držet v soukromí: nemluvit nahlas, neposílat do osobních chatů."
+    ],
+    "homeTips": [
+      "Zapni ověřovací kód všude, kde to jde.",
+      "Aktualizuj telefon i pracovní aplikace jen z oficiálních zdrojů.",
+      "Fotky dokladů neposílej do chatu.",
+      "Na veřejné Wi‑Fi se nepřihlašuj bez zabezpečení.",
+      "Používej dlouhá a jedinečná hesla.",
+      "Když si nejsi jistý/á, zeptej se vedoucího."
+    ]
+  },
+  "modules": [
+    {
+      "slug": "phishing-storefront",
+      "title": "Phishing e‑mail o StoreFront",
+      "image": "/static/images/ill-phishing.svg",
+      "story": "Ráno před otevřením přijde e‑mail ‚StoreFront podpora‘: potvrďte účet do 20 minut, jinak bude BO zablokováno. Všichni spěchají a fronta roste.",
+      "correctAction": "Neotvírat odkaz. Ověřit přes vedoucího nebo oficiální kontakt StoreFront/centrály.",
+      "tip1": "Kontroluj doménu odesílatele a pravopis.",
+      "tip2": "Urgence a hrozby jsou typické varovné znaky."
+    },
+    {
+      "slug": "whatsapp-it",
+      "title": "WhatsApp od ‚IT podpory‘",
+      "image": "/static/images/ill-vishing.svg",
+      "story": "Na pracovním telefonu přijde zpráva přes WhatsApp: ‚Jsem IT, pošlete SMS kód kvůli aktualizaci StoreFront.‘",
+      "correctAction": "Kód neposílat. Ověřit přes oficiální kontakt. Neinstalovat žádné aplikace z odkazu.",
+      "tip1": "IT nikdy nechce SMS/2FA kód ani heslo.",
+      "tip2": "Interní komunikace jde jen přes oficiální kanály."
+    },
+    {
+      "slug": "usb-warehouse",
+      "title": "Neznámé USB nebo QR",
+      "image": "/static/images/ill-usb.svg",
+      "story": "Na skladě najdeš USB s nápisem ‚ceníky‘ nebo QR ‚seznam rozvozů‘. Zní to lákavě, ale je to past.",
+      "correctAction": "USB/QR neotvírat, nahlásit vedoucímu. Dokumenty jsou ve StoreFront/BO.",
+      "tip1": "USB/QR může obsahovat malware nebo podvodný web.",
+      "tip2": "Důležité soubory se sdílí jen interně."
+    },
+    {
+      "slug": "shared-terminal",
+      "title": "Sdílený BO a pokladna",
+      "image": "/static/images/ill-shared.svg",
+      "story": "Odcházíš od BO/StoreFront nebo pokladny na minutu. Obrazovka zůstane otevřená.",
+      "correctAction": "Vždy zamknout obrazovku nebo se odhlásit. I na minutu.",
+      "tip1": "Minuta stačí ke zneužití účtu.",
+      "tip2": "Zvykni si na rychlou klávesu pro zamykání."
+    },
+    {
+      "slug": "customer-privacy",
+      "title": "Ochrana zákaznických údajů",
+      "image": "/static/images/ill-privacy.svg",
+      "story": "U pokladny je fronta. Kolega nahlas diktuje celé údaje zákazníka nebo chce poslat fotku dokladu do chatu.",
+      "correctAction": "Sdílet jen minimum, potichu. Údaje neposílat do osobních chatů.",
+      "tip1": "Citlivé údaje nepatří do WhatsAppu ani SMS.",
+      "tip2": "Obrazovku natoč tak, aby ji neviděli ostatní."
+    }
+  ],
+  "games": {
+    "pre": {
+      "title": "Rychlá rozcvička: odhal podezřelé",
+      "intro": "Krátký rozjezd před kurzem. Klikni jen na podezřelé části.",
+      "scenes": [
+        {
+          "id": "email-bo-reset",
+          "kind": "email",
+          "topic": "phishing",
+          "title": "E‑mail o resetu BO",
+          "lead": "Přijde e‑mail s tvrzením o incidentu a požadavkem na rychlé potvrzení.",
+          "hint": "Pozor na doménu, tlak na čas, odkaz a přílohu.",
+          "header": {
+            "from": "bo-security@jysk-support.com",
+            "subject": "Reset hesla BO: potvrď do 15 minut",
+            "to": "prodejna@jysk.cz"
+          },
+          "headerFlags": {
+            "from": "flag",
+            "subject": "flag"
+          },
+          "lines": [
+            {
+              "text": "Kvůli bezpečnostnímu incidentu musíš potvrdit reset do 15 minut.",
+              "flag": true
+            },
+            {
+              "text": "Potvrzení provedete zde:",
+              "safe": true
+            },
+            {
+              "text": "https://jysk-support-verify.com/bo-reset",
+              "flag": true,
+              "link": true
+            },
+            {
+              "text": "Reset_form.docm",
+              "flag": true,
+              "attachment": true
+            },
+            {
+              "text": "Pokud je to omyl, ověř u vedoucího.",
+              "safe": true
+            }
+          ]
+        },
+        {
+          "id": "whatsapp-bo-access",
+          "kind": "chat",
+          "topic": "mobile",
+          "title": "WhatsApp od „BO podpory“",
+          "lead": "Na pracovním telefonu přijde zpráva s žádostí o přístup.",
+          "hint": "Nikdy neposílej kódy, hesla ani neinstaluj z odkazu.",
+          "header": {
+            "app": "WhatsApp",
+            "from": "+420 776 555 110",
+            "name": "BO podpora"
+          },
+          "lines": [
+            {
+              "text": "Potřebuju jednorázový kód, jinak účet zablokuje.",
+              "flag": true
+            },
+            {
+              "text": "Pošli mi přihlašovací údaje k BO.",
+              "flag": true
+            },
+            {
+              "text": "Nainstaluj rychle secure-access.apk z odkazu.",
+              "flag": true
+            },
+            {
+              "text": "Ověřím si to přes vedoucího nebo oficiální linku.",
+              "safe": true
+            }
+          ]
+        },
+        {
+          "id": "stock-break",
+          "kind": "screen",
+          "topic": "shared_pc",
+          "title": "Odbíháš na sklad",
+          "lead": "Na minutku jdeš na sklad, BO zůstává otevřené.",
+          "hint": "Zamykat vždy. Nikdy nepředávat přihlášení.",
+          "lines": [
+            {
+              "text": "Nechám BO otevřené, vrátím se za minutu.",
+              "flag": true
+            },
+            {
+              "text": "Zamknu obrazovku (Win+L).",
+              "safe": true
+            },
+            {
+              "text": "Předám přihlášení kolegovi.",
+              "flag": true
+            },
+            {
+              "text": "Odhlásím se před odchodem.",
+              "safe": true
+            }
+          ]
+        }
+      ]
+    },
+    "post": {
+      "title": "Závěrečná mise: obstojíš v praxi?",
+      "intro": "Nové situace z reálné směny. Najdi všechny podezřelé věci.",
+      "scenes": [
+        {
+          "id": "email-price-list",
+          "kind": "email",
+          "topic": "phishing",
+          "title": "E‑mail o ceníku",
+          "lead": "Přijde e‑mail o změnách ceníku. Najdi, co je podezřelé.",
+          "hint": "Pozor na tlak na čas, divnou doménu a přílohu.",
+          "header": {
+            "from": "pricing@jysk-news.com",
+            "subject": "Změny ceníku: potvrď do konce směny",
+            "to": "prodejna@jysk.cz"
+          },
+          "headerFlags": {
+            "from": "flag",
+            "subject": "flag"
+          },
+          "lines": [
+            {
+              "text": "Změny musí být potvrzeny do 20 minut, jinak se ceník neuplatní.",
+              "flag": true
+            },
+            {
+              "text": "Otevřete odkaz:",
+              "safe": true
+            },
+            {
+              "text": "https://jysk-pricing-portal.com/confirm",
+              "flag": true,
+              "link": true
+            },
+            {
+              "text": "price_list_2024.xlsm",
+              "flag": true,
+              "attachment": true
+            },
+            {
+              "text": "Tým pricingu",
+              "safe": true
+            }
+          ]
+        },
+        {
+          "id": "whatsapp-courier",
+          "kind": "chat",
+          "topic": "mobile",
+          "title": "WhatsApp od kurýra",
+          "lead": "Kurýr posílá zprávu ohledně doručení. Klikni na podezřelé věty.",
+          "hint": "QR/odkazy z neověřených čísel jsou riziko.",
+          "header": {
+            "app": "WhatsApp",
+            "from": "+420 776 900 221",
+            "name": "Kurýr"
+          },
+          "lines": [
+            {
+              "text": "Mám zásilku, potřebuju potvrdit přes QR.",
+              "flag": true
+            },
+            {
+              "text": "Tady je QR: jysk‑delivery‑track.com/qr",
+              "flag": true
+            },
+            {
+              "text": "Pošli mi fotku dodacího listu do WhatsAppu.",
+              "flag": true
+            },
+            {
+              "text": "Potvrdím jen přes oficiální systém StoreFront/BO.",
+              "safe": true
+            }
+          ]
+        },
+        {
+          "id": "usb-supplier",
+          "kind": "note",
+          "topic": "usb",
+          "title": "USB od dodavatele",
+          "lead": "Ve skladu zůstalo USB od dodavatele. Klikni na věci, které nepatří otevřít.",
+          "hint": "Neznámé USB a cizí QR jsou vždy riziko.",
+          "lines": [
+            {
+              "text": "USB: „Akční fotky výrobků“",
+              "flag": true
+            },
+            {
+              "text": "QR: „nový ceník“ z krabice",
+              "flag": true
+            },
+            {
+              "text": "Odevzdám vedoucímu a nic neotvírám.",
+              "safe": true
+            },
+            {
+              "text": "Připojím USB na BO kvůli fotkám.",
+              "flag": true
+            }
+          ]
+        },
+        {
+          "id": "cash-desk",
+          "kind": "screen",
+          "topic": "shared_pc",
+          "title": "Pokladna během špičky",
+          "lead": "U pokladny je špička a odbíháš. Klikni na nebezpečné možnosti.",
+          "hint": "Sdílené zařízení vždy zamykat nebo odhlásit.",
+          "lines": [
+            {
+              "text": "Nechám pokladnu odemčenou, ať fronta nezdržuje.",
+              "flag": true
+            },
+            {
+              "text": "Předám přihlášení kolegyni.",
+              "flag": true
+            },
+            {
+              "text": "Zamknu obrazovku i na minutu.",
+              "safe": true
+            }
+          ]
+        },
+        {
+          "id": "return-privacy",
+          "kind": "privacy",
+          "topic": "privacy",
+          "title": "Reklamace a údaje",
+          "lead": "Zákazník řeší reklamaci. Klikni na věci, které bys dělat neměl/a.",
+          "hint": "Citlivé údaje nepatří do chatu a nemají se říkat nahlas.",
+          "lines": [
+            {
+              "text": "Pošlu fotku účtenky do osobního chatu.",
+              "flag": true
+            },
+            {
+              "text": "Nahlas čtu adresu zákazníka.",
+              "flag": true
+            },
+            {
+              "text": "Použiju oficiální systém a mluvím potichu.",
+              "safe": true
+            },
+            {
+              "text": "Sdílím jen minimum údajů.",
+              "safe": true
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "questions": []
+}

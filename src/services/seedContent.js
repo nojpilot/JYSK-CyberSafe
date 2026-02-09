@@ -78,15 +78,15 @@ const FALLBACK_SEED = {
       intro: 'Kratky rozjezd pred kurzem. Klikni jen na podezrele casti.',
       scenes: [
         {
-          id: 'email-logistics',
+          id: 'email-bo-reset',
           kind: 'email',
           topic: 'phishing',
-          title: 'E-mail o doprave',
-          lead: 'Prijde e-mail s fakturou a tlakem na cas. Najdi, co je podezrele.',
-          hint: 'Zkontroluj adresu, nalehavost a prilohu.',
+          title: 'E-mail o resetu BO',
+          lead: 'Prijde e-mail s tvrzenim o incidentu a pozadavkem na rychle potvrzeni.',
+          hint: 'Pozor na domenu, tlak na cas, odkaz a prilohu.',
           header: {
-            from: 'logistika@jysk-delivery.com',
-            subject: 'Posledni vyzva: potvrd dopravu dnes',
+            from: 'bo-security@jysk-support.com',
+            subject: 'Reset hesla BO: potvrd do 15 minut',
             to: 'prodejna@jysk.cz'
           },
           headerFlags: {
@@ -94,43 +94,43 @@ const FALLBACK_SEED = {
             subject: 'flag'
           },
           lines: [
-            { text: 'Bez potvrzeni do 30 minut bude zasilka vracena.', flag: true },
-            { text: 'Kliknete zde pro potvrzeni:', safe: true },
-            { text: 'https://jysk-delivery-confirm.com/invoice', flag: true, link: true },
-            { text: 'Invoice_0302.zip', flag: true, attachment: true },
-            { text: 'Dekujeme, tym logistiky', safe: true }
+            { text: 'Kvuli bezpecnostnimu incidentu musis potvrdit reset do 15 minut.', flag: true },
+            { text: 'Potvrzeni provedete zde:', safe: true },
+            { text: 'https://jysk-support-verify.com/bo-reset', flag: true, link: true },
+            { text: 'Reset_form.docm', flag: true, attachment: true },
+            { text: 'Pokud je to omyl, over u vedouciho.', safe: true }
           ]
         },
         {
-          id: 'sms-it',
+          id: 'whatsapp-bo-access',
           kind: 'chat',
           topic: 'mobile',
-          title: 'SMS od \"IT podpory\"',
-          lead: 'Na pracovnim telefonu prijde SMS. Klikni na podezrele vety.',
-          hint: 'Pozor na zadost o kod a instalaci z odkazu.',
+          title: 'WhatsApp od \"BO podpory\"',
+          lead: 'Na pracovnim telefonu prijde zprava s zadosti o pristup.',
+          hint: 'Nikdy neposilej kody, hesla ani neinstaluj z odkazu.',
           header: {
-            app: 'SMS',
-            from: '+420 777 321 009',
-            name: 'IT podpora'
+            app: 'WhatsApp',
+            from: '+420 776 555 110',
+            name: 'BO podpora'
           },
           lines: [
-            { text: 'Potrebujeme overit tvuj ucet BO jeste dnes.', flag: true },
-            { text: 'Posli mi kod z SMS, at to stihneme.', flag: true },
-            { text: 'Nainstaluj update z odkazu: bo-update.apk', flag: true },
-            { text: 'Overim si to pres vedouciho/IT oficialnim cislem.', safe: true }
+            { text: 'Potrebuju jednorazovy kod, jinak ucet zablokuje.', flag: true },
+            { text: 'Posli mi prihlasovaci udaje k BO.', flag: true },
+            { text: 'Nainstaluj rychle secure-access.apk z odkazu.', flag: true },
+            { text: 'Overim si to pres vedouciho nebo oficialni linku.', safe: true }
           ]
         },
         {
-          id: 'shared-storefront',
+          id: 'stock-break',
           kind: 'screen',
           topic: 'shared_pc',
-          title: 'Sdileny StoreFront',
-          lead: 'Odbihas od zarizeni. Klikni na nebezpecne moznosti.',
-          hint: 'Sdilene zarizeni vzdy zamykat nebo odhlasit.',
+          title: 'Odbihas na sklad',
+          lead: 'Na minutku jdes na sklad, BO zustava otevrene.',
+          hint: 'Zamykat vzdy. Nikdy nepredavat prihlaseni.',
           lines: [
-            { text: 'Necham ucet prihlaseny, jsem hned zpet.', flag: true },
-            { text: 'Prepnou na svuj ucet a zamknu obrazovku.', safe: true },
-            { text: 'Zapisu heslo na papir, at ho nezapomenu.', flag: true },
+            { text: 'Necham BO otevrene, vratim se za minutu.', flag: true },
+            { text: 'Zamknu obrazovku (Win+L).', safe: true },
+            { text: 'Predam prihlaseni kolegovi.', flag: true },
             { text: 'Odhlasim se pred odchodem.', safe: true }
           ]
         }

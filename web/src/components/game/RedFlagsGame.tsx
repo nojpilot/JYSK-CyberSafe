@@ -37,9 +37,10 @@ type Props = {
   progress?: { stepIndex: number; totalSteps: number; progress: number }
   phase: 'pre' | 'post'
   redirectTo: string
+  mode?: 'default' | 'onboarding'
 }
 
-export default function RedFlagsGame({ game, progress, phase, redirectTo }: Props) {
+export default function RedFlagsGame({ game, progress, phase, redirectTo, mode = 'default' }: Props) {
   const router = useRouter()
   const scenes = game?.scenes || []
 
@@ -102,12 +103,21 @@ export default function RedFlagsGame({ game, progress, phase, redirectTo }: Prop
   }
 
   const handleSafeClick = (sceneIdx: number, key: string) => {
+    if (mode === 'onboarding') {
+      markMiss(sceneIdx, key)
+      setFeedback({ type: 'bad', text: 'Tohle je bezpečné. V rozjezdu nepočítáme omyly.' })
+      return
+    }
     setMiss((v) => v + 1)
     markMiss(sceneIdx, key)
     setFeedback({ type: 'bad', text: 'Tohle je bezpečné. Neklikej sem.' })
   }
 
   const finalize = async () => {
+    if (mode === 'onboarding') {
+      router.push(redirectTo)
+      return
+    }
     const payload: GameResults = {
       score: foundTotal,
       max: Object.values(topicTotals).reduce((acc, t) => acc + t.total, 0),
@@ -145,14 +155,28 @@ export default function RedFlagsGame({ game, progress, phase, redirectTo }: Prop
             </div>
           </div>
         )}
-        <div className="game-rules">
-          <strong>Úkol:</strong> V každé situaci klikni na všechny podezřelé části. Bezpečné části neklikej. Další situace se odemkne až po nalezení všech vlajek.
-        </div>
-        <div className="game-status">
-          <div className="chip">Situace: {currentIndex + 1}/{scenes.length}</div>
-          <div className="chip">Nalezeno v této situaci: {foundInScene}/{flagsInScene}</div>
-          <div className="chip">Omyl: {miss}</div>
-        </div>
+          <div className="game-rules">
+            {mode === 'onboarding' ? (
+              <>
+                <strong>Rozjezd:</strong> Zkus si mechaniku. Klikni na podezřelé části.
+                Bezpečné části neklikej. Omyl se v rozjezdu nepočítá.
+              </>
+            ) : (
+              <>
+                <strong>Úkol:</strong> V každé situaci klikni na všechny podezřelé části.
+                Bezpečné části neklikej. Další situace se odemkne až po nalezení všech vlajek.
+              </>
+            )}
+          </div>
+          <div className="game-status">
+            <div className="chip">Situace: {currentIndex + 1}/{scenes.length}</div>
+            <div className="chip">Nalezeno v této situaci: {foundInScene}/{flagsInScene}</div>
+            {mode === 'onboarding' ? (
+              <div className="chip">Rozjezd bez skóre</div>
+            ) : (
+              <div className="chip">Omyl: {miss}</div>
+            )}
+          </div>
         {feedback && (
           <div className={`game-feedback ${feedback.type === 'good' ? 'is-good' : 'is-bad'}`}>
             {feedback.text}
@@ -361,7 +385,7 @@ export default function RedFlagsGame({ game, progress, phase, redirectTo }: Prop
         )}
         {currentIndex === scenes.length - 1 && (
           <LiquidButton type="button" disabled={!sceneComplete} onClick={finalize}>
-            Dokončit hru
+            {mode === 'onboarding' ? 'Pokračovat do kurzu' : 'Dokončit hru'}
           </LiquidButton>
         )}
       </div>

@@ -19,5 +19,13 @@ export default function PreTestPage() {
 
   if (!game || !progress) return <div className="card">Načítám…</div>
 
-  return <RedFlagsGame game={game} progress={progress} phase="pre" redirectTo="/kurz/1" />
+  return (
+    <RedFlagsGame
+      game={game}
+      progress={progress}
+      phase="pre"
+      redirectTo="/kurz/1"
+      mode="onboarding"
+    />
+  )
 }

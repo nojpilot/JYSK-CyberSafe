@@ -49,13 +49,6 @@ router.post('/game/:phase', (req, res) => {
   const insertAnswer = db.prepare('INSERT INTO answers (session_id, phase, question_key, selected_option, is_correct) VALUES (?, ?, ?, ?, ?)');
 
   if (phase === 'pre') {
-    db.transaction(() => {
-      db.prepare('DELETE FROM answers WHERE session_id = ? AND phase = ?').run(req.anonSessionId, 'pre');
-      details.forEach((d) => {
-        insertAnswer.run(req.anonSessionId, 'pre', d.question.topic_tag, 'A', d.isCorrect ? 1 : 0);
-      });
-      db.prepare('UPDATE sessions SET pre_score=? WHERE session_id=?').run(results.score, req.anonSessionId);
-    })();
     return res.json({ ok: true });
   }
 
