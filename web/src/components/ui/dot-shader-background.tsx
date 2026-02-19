@@ -17,12 +17,12 @@ const DotMaterial = shaderMaterial(
     gridSize: 50,
     dotOpacity: 0.06
   },
-  /* glsl */ `
+  `
     void main() {
       gl_Position = vec4(position.xy, 0.0, 1.0);
     }
   `,
-  /* glsl */ `
+  `
     uniform float time;
     uniform int render;
     uniform vec2 resolution;
@@ -34,10 +34,10 @@ const DotMaterial = shaderMaterial(
     uniform float dotOpacity;
 
     vec2 rotate(vec2 uv, float angle) {
-        float s = sin(angle);
-        float c = cos(angle);
-        mat2 rotationMatrix = mat2(c, -s, s, c);
-        return rotationMatrix * (uv - 0.5) + 0.5;
+      float s = sin(angle);
+      float c = cos(angle);
+      mat2 rotationMatrix = mat2(c, -s, s, c);
+      return rotationMatrix * (uv - 0.5) + 0.5;
     }
 
     vec2 coverUv(vec2 uv) {
@@ -47,7 +47,7 @@ const DotMaterial = shaderMaterial(
     }
 
     float sdfCircle(vec2 p, float r) {
-        return length(p - 0.5) - r;
+      return length(p - 0.5) - r;
     }
 
     void main() {
@@ -58,13 +58,10 @@ const DotMaterial = shaderMaterial(
       vec2 gridUv = fract(rotatedUv * gridSize);
       vec2 gridUvCenterInScreenCoords = rotate((floor(rotatedUv * gridSize) + 0.5) / gridSize, -rotation);
 
-      float baseDot = sdfCircle(gridUv, 0.25);
-
       float screenMask = smoothstep(0.0, 1.0, 1.0 - uv.y);
       vec2 centerDisplace = vec2(0.7, 1.1);
       float circleMaskCenter = length(uv - centerDisplace);
       float circleMaskFromCenter = smoothstep(0.5, 1.0, circleMaskCenter);
-
       float combinedMask = screenMask * circleMaskFromCenter;
       float circleAnimatedMask = sin(time * 2.0 + circleMaskCenter * 10.0);
 
@@ -74,11 +71,9 @@ const DotMaterial = shaderMaterial(
 
       float sdfDot = sdfCircle(gridUv, dotSize * (1.0 + scaleInfluence * 0.5));
       float smoothDot = smoothstep(0.05, 0.0, sdfDot);
-
       float opacityInfluence = max(mouseInfluence * 120.0, circleAnimatedMask * 0.6);
 
       vec3 composition = mix(bgColor, dotColor, smoothDot * combinedMask * dotOpacity * (1.0 + opacityInfluence));
-
       gl_FragColor = vec4(composition, 1.0);
 
       #include <tonemapping_fragment>
@@ -90,7 +85,6 @@ const DotMaterial = shaderMaterial(
 function Scene() {
   const size = useThree((s) => s.size)
   const viewport = useThree((s) => s.viewport)
-
   const rotation = 0
   const gridSize = 100
 
@@ -106,9 +100,7 @@ function Scene() {
     }
   })
 
-  const dotMaterial = useMemo(() => {
-    return new (DotMaterial as any)()
-  }, [])
+  const dotMaterial = useMemo(() => new (DotMaterial as any)(), [])
 
   useFrame((state) => {
     dotMaterial.uniforms.time.value = state.clock.elapsedTime

@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react'
 import Link from 'next/link'
 
-export default function Header() {
+export default function TopBar() {
   const [senior, setSenior] = useState(false)
 
   useEffect(() => {

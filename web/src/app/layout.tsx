@@ -1,11 +1,11 @@
 import './globals.css'
 import type { Metadata } from 'next'
+import TopBar from '@/components/layout/TopBar'
 import { DotScreenShader } from '@/components/ui/dot-shader-background'
-import Header from '@/components/layout/Header'
 
 export const metadata: Metadata = {
   title: 'JYSK CyberSafe',
-  description: 'Mikro-kurz kyberbezpečnosti pro směnu v JYSKu'
+  description: 'Virtuální směna: bezpečné návyky během jednoho pracovního dne'
 }
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -15,11 +15,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <div className="fixed inset-0 z-0 pointer-events-none">
           <DotScreenShader />
         </div>
-        <div className="relative z-10">
-          <Header />
-          <main className="max-w-5xl mx-auto p-6 md:p-8">
+        <div className="relative z-10 min-h-screen flex flex-col">
+          <TopBar />
+          <main className="flex-1 max-w-5xl mx-auto p-6 md:p-8 w-full">
             {children}
           </main>
+          <footer className="border-t border-white/10 bg-slate-950/60 backdrop-blur-md">
+            <div className="max-w-5xl mx-auto px-6 py-4 text-center text-sm text-slate-300">
+              Nazar Azimov · za podpory Google.org
+            </div>
+          </footer>
         </div>
         <svg aria-hidden="true" className="glass-filter" focusable="false">
           <filter

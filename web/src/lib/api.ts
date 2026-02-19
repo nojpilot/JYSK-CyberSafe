@@ -1,10 +1,3 @@
-export type GameResults = {
-  score: number
-  max: number
-  miss: number
-  topics: Record<string, { found: number; total: number }>
-}
-
 export async function apiGet<T>(path: string): Promise<T> {
   const res = await fetch(path, { cache: 'no-store' })
   if (!res.ok) throw new Error(`API ${path} failed`)
