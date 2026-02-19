@@ -1,6 +1,6 @@
 'use client'
 
-import { FormEvent, useMemo, useState } from 'react'
+import { FormEvent, useEffect, useMemo, useState } from 'react'
 import scenarioData from '@/data/scenario.json'
 import { LiquidButton } from '@/components/ui/liquid-glass-button'
 import { apiPost } from '@/lib/api'
@@ -78,6 +78,20 @@ type RedFlagsResult = {
 
 type ViewState = 'intro' | 'shift' | 'summary'
 
+type PersistedShiftState = {
+  view: ViewState
+  currentRoomIndex: number
+  selectedOptionId: string | null
+  redFlagHits: string[]
+  redFlagMisses: string[]
+  redFlagResult: RedFlagsResult | null
+  answers: AnswerRecord[]
+  survey: SurveyPayload
+  surveySaved: boolean
+}
+
+const SHIFT_PROGRESS_STORAGE_KEY = 'jysk-cybersafe.shift-progress.v1'
+
 const typedData = scenarioData as {
   meta: { title: string; subtitle: string; description: string }
   shiftTimeline: Room[]
@@ -114,6 +128,7 @@ export default function HomePage() {
   const [savingSurvey, setSavingSurvey] = useState(false)
   const [surveySaved, setSurveySaved] = useState(false)
   const [surveyError, setSurveyError] = useState('')
+  const [storageReady, setStorageReady] = useState(false)
 
   const currentRoom = rooms[currentRoomIndex]
   const correctAnswers = useMemo(() => answers.filter((a) => a.isCorrect).length, [answers])
@@ -127,6 +142,119 @@ export default function HomePage() {
   )
 
   const canSubmitSurvey = survey.q1 && survey.q2 && survey.q3 && survey.q4
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return
+
+    const clampIndex = (value: number) => {
+      if (rooms.length === 0) return 0
+      return Math.max(0, Math.min(value, rooms.length - 1))
+    }
+
+    try {
+      const raw = window.localStorage.getItem(SHIFT_PROGRESS_STORAGE_KEY)
+      if (!raw) {
+        setStorageReady(true)
+        return
+      }
+
+      const parsed = JSON.parse(raw) as Partial<PersistedShiftState>
+
+      const nextView: ViewState =
+        parsed.view === 'shift' || parsed.view === 'summary' ? parsed.view : 'intro'
+      const nextIndex = Number.isInteger(parsed.currentRoomIndex)
+        ? clampIndex(Number(parsed.currentRoomIndex))
+        : 0
+
+      const safeAnswers = Array.isArray(parsed.answers)
+        ? parsed.answers.filter(
+            (item): item is AnswerRecord =>
+              Boolean(item) &&
+              typeof item.roomId === 'string' &&
+              typeof item.optionId === 'string' &&
+              typeof item.isCorrect === 'boolean'
+          )
+        : []
+
+      const safeHits = Array.isArray(parsed.redFlagHits)
+        ? parsed.redFlagHits.filter((item): item is string => typeof item === 'string')
+        : []
+
+      const safeMisses = Array.isArray(parsed.redFlagMisses)
+        ? parsed.redFlagMisses.filter((item): item is string => typeof item === 'string')
+        : []
+
+      const safeRedFlagResult =
+        parsed.redFlagResult &&
+        typeof parsed.redFlagResult === 'object' &&
+        typeof parsed.redFlagResult.feedback === 'string' &&
+        typeof parsed.redFlagResult.isCorrect === 'boolean'
+          ? parsed.redFlagResult
+          : null
+
+      const safeSurvey = createEmptySurvey()
+      if (parsed.survey && typeof parsed.survey === 'object') {
+        const surveyCandidate = parsed.survey as Partial<SurveyPayload>
+        safeSurvey.q1 = typeof surveyCandidate.q1 === 'string' ? surveyCandidate.q1 : ''
+        safeSurvey.q2 = typeof surveyCandidate.q2 === 'string' ? surveyCandidate.q2 : ''
+        safeSurvey.q3 = typeof surveyCandidate.q3 === 'string' ? surveyCandidate.q3 : ''
+        safeSurvey.q4 = typeof surveyCandidate.q4 === 'string' ? surveyCandidate.q4 : ''
+        safeSurvey.comment = typeof surveyCandidate.comment === 'string' ? surveyCandidate.comment : ''
+      }
+
+      setView(nextView)
+      setCurrentRoomIndex(nextIndex)
+      setAnswers(safeAnswers)
+      setRedFlagHits(safeHits)
+      setRedFlagMisses(safeMisses)
+      setRedFlagResult(safeRedFlagResult)
+      setSurvey(safeSurvey)
+      setSurveySaved(Boolean(parsed.surveySaved))
+      setSurveyError('')
+
+      const restoredRoom = rooms[nextIndex]
+      const selectedOptionId = typeof parsed.selectedOptionId === 'string' ? parsed.selectedOptionId : null
+      if (selectedOptionId && restoredRoom) {
+        const restoredOption = restoredRoom.challenge.options.find((option) => option.id === selectedOptionId)
+        setSelectedOption(restoredOption ?? null)
+      } else {
+        setSelectedOption(null)
+      }
+    } catch (err) {
+      window.localStorage.removeItem(SHIFT_PROGRESS_STORAGE_KEY)
+    } finally {
+      setStorageReady(true)
+    }
+  }, [rooms])
+
+  useEffect(() => {
+    if (!storageReady || typeof window === 'undefined') return
+
+    const snapshot: PersistedShiftState = {
+      view,
+      currentRoomIndex,
+      selectedOptionId: selectedOption?.id ?? null,
+      redFlagHits,
+      redFlagMisses,
+      redFlagResult,
+      answers,
+      survey,
+      surveySaved
+    }
+
+    window.localStorage.setItem(SHIFT_PROGRESS_STORAGE_KEY, JSON.stringify(snapshot))
+  }, [
+    storageReady,
+    view,
+    currentRoomIndex,
+    selectedOption,
+    redFlagHits,
+    redFlagMisses,
+    redFlagResult,
+    answers,
+    survey,
+    surveySaved
+  ])
 
   const startShift = () => {
     setView('shift')

@@ -11,6 +11,12 @@ function logAction(user, action, detail) {
   db.prepare('INSERT INTO audit_logs (admin_username, action, detail) VALUES (?, ?, ?)').run(user, action, detail);
 }
 
+function csvEscape(value) {
+  const str = value == null ? '' : String(value);
+  if (/[",\n\r]/.test(str)) return `"${str.replace(/"/g, '""')}"`;
+  return str;
+}
+
 router.get('/login', (req, res) => {
   res.render('admin/login', { error: null, demoMode: process.env.DEMO_MODE === 'true', bodyClass: 'admin-theme' });
 });
@@ -129,6 +135,48 @@ router.get('/stats.csv', (req, res) => {
   rows.forEach((r) => csv.push(`${r.created_at},${r.pre_score ?? ''},${r.post_score ?? ''},${r.improvement ?? ''},${r.completed_at ?? ''}`));
   res.setHeader('Content-Type', 'text/csv; charset=utf-8');
   res.setHeader('Content-Disposition', 'attachment; filename="cybersafe-statistiky.csv"');
+  res.send(csv.join('\n'));
+});
+
+router.get('/feedback', (req, res) => {
+  const rows = db.prepare(`
+    SELECT f.created_at, f.q1, f.q2, f.q3, f.q4, f.comment, f.session_id
+    FROM feedback f
+    ORDER BY f.id DESC
+    LIMIT 200
+  `).all();
+
+  res.render('admin/feedback', {
+    rows,
+    demoMode: process.env.DEMO_MODE === 'true',
+    bodyClass: 'admin-theme'
+  });
+});
+
+router.get('/feedback.csv', (req, res) => {
+  const rows = db.prepare(`
+    SELECT f.created_at, f.session_id, f.q1, f.q2, f.q3, f.q4, f.comment
+    FROM feedback f
+    ORDER BY f.id DESC
+  `).all();
+
+  const header = ['created_at', 'session_id', 'q1', 'q2', 'q3', 'q4', 'comment'];
+  const csv = [header.join(',')];
+
+  rows.forEach((row) => {
+    csv.push([
+      row.created_at,
+      row.session_id,
+      row.q1,
+      row.q2,
+      row.q3,
+      row.q4,
+      row.comment
+    ].map(csvEscape).join(','));
+  });
+
+  res.setHeader('Content-Type', 'text/csv; charset=utf-8');
+  res.setHeader('Content-Disposition', 'attachment; filename="cybersafe-feedback.csv"');
   res.send(csv.join('\n'));
 });
 

@@ -1,0 +1,44 @@
+<%- include('../partials/head', { title: 'Admin feedback' }) %>
+<section class="card">
+  <h1 class="text-3xl font-bold">Zpětná vazba od uživatelů</h1>
+  <p class="text-slate-300 mt-2">Posledních 200 odpovědí z ankety po dokončení směny.</p>
+
+  <% if (!rows.length) { %>
+    <p class="mt-3">Zatím tu není žádná odeslaná zpětná vazba.</p>
+  <% } else { %>
+    <div class="mt-3" style="overflow-x:auto;">
+      <table style="width:100%; border-collapse:collapse; min-width:900px;">
+        <thead>
+          <tr>
+            <th style="text-align:left; padding:10px; border-bottom:1px solid #d8e1ee;">Čas</th>
+            <th style="text-align:left; padding:10px; border-bottom:1px solid #d8e1ee;">Session</th>
+            <th style="text-align:left; padding:10px; border-bottom:1px solid #d8e1ee;">Q1</th>
+            <th style="text-align:left; padding:10px; border-bottom:1px solid #d8e1ee;">Q2</th>
+            <th style="text-align:left; padding:10px; border-bottom:1px solid #d8e1ee;">Q3</th>
+            <th style="text-align:left; padding:10px; border-bottom:1px solid #d8e1ee;">Q4</th>
+            <th style="text-align:left; padding:10px; border-bottom:1px solid #d8e1ee;">Komentář</th>
+          </tr>
+        </thead>
+        <tbody>
+          <% rows.forEach((row) => { %>
+            <tr>
+              <td style="padding:10px; border-bottom:1px solid #edf2f7;"><%= row.created_at %></td>
+              <td style="padding:10px; border-bottom:1px solid #edf2f7; font-family:monospace; font-size:12px;"><%= row.session_id %></td>
+              <td style="padding:10px; border-bottom:1px solid #edf2f7;"><%= row.q1 %></td>
+              <td style="padding:10px; border-bottom:1px solid #edf2f7;"><%= row.q2 %></td>
+              <td style="padding:10px; border-bottom:1px solid #edf2f7;"><%= row.q3 %></td>
+              <td style="padding:10px; border-bottom:1px solid #edf2f7;"><%= row.q4 %></td>
+              <td style="padding:10px; border-bottom:1px solid #edf2f7; max-width:320px; white-space:normal;"><%= row.comment || '—' %></td>
+            </tr>
+          <% }) %>
+        </tbody>
+      </table>
+    </div>
+  <% } %>
+
+  <div class="flex gap-3 mt-4">
+    <a class="btn btn-primary" href="/admin/feedback.csv">Export CSV</a>
+    <a class="btn btn-secondary" href="/admin">Zpět na dashboard</a>
+  </div>
+</section>
+<%- include('../partials/foot') %>
