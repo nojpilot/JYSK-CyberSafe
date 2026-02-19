@@ -1,5 +1,5 @@
 node_modules/
-data/
+/data/
 !.gitkeep
 .env
-nginx/certbot/
+/nginx/certbot/

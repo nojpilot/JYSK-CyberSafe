@@ -1,0 +1,344 @@
+{
+  "meta": {
+    "title": "Virtuální směna v JYSKu",
+    "subtitle": "Interaktivní trénink bezpečných návyků přímo v průběhu směny",
+    "description": "Nejde o zkoušku. Po každé volbě dostaneš hned vysvětlení, jak chránit sebe i prodejnu."
+  },
+  "shiftTimeline": [
+    {
+      "id": "room_01_sms",
+      "time": "07:30",
+      "location": "Cesta do práce",
+      "storyIntro": "Jedeš do práce a pípne telefon. Přijde SMS: \"Zasilkovna: Vas balik je pozastaven. Doplatte 45 Kc zde: zasilkovna-doplatky-online.eu\".",
+      "learningPoint": "Pravidlo: Na odkazy v SMS od neznámých čísel se nekliká. Ověř si vše v oficiální aplikaci nebo přes známou adresu webu.",
+      "challenge": {
+        "question": "Co uděláš?",
+        "type": "multiple_choice",
+        "options": [
+          {
+            "id": "room_01_a",
+            "text": "A: Kliknu na odkaz a hned doplatím 45 Kč.",
+            "isCorrect": false,
+            "feedback": "Rozumím, že to chceš vyřešit hned. Tohle je ale častá past. Odkaz tě může zavést na falešnou stránku a připravit tě o údaje i peníze."
+          },
+          {
+            "id": "room_01_b",
+            "text": "B: Otevřu odkaz jen na kontrolu, nic tam nevyplním.",
+            "isCorrect": false,
+            "feedback": "I jen otevření odkazu je riziko. Stránka může vypadat důvěryhodně, ale pořád je to podvodná adresa webu."
+          },
+          {
+            "id": "room_01_c",
+            "text": "C: SMS smažu a zásilku ověřím v oficiální aplikaci dopravce.",
+            "isCorrect": true,
+            "feedback": "Výborně. Přesně takhle chráníš sebe i firmu. Ověření přes oficiální cestu je bezpečný návyk."
+          },
+          {
+            "id": "room_01_d",
+            "text": "D: Zavolám na číslo ze SMS a nadiktuji údaje k balíku.",
+            "isCorrect": false,
+            "feedback": "Chápu, že chceš mít jistotu. Číslo ve zprávě ale může patřit podvodníkovi. Bezpečnější je ověřit vše přes oficiální aplikaci."
+          }
+        ]
+      }
+    },
+    {
+      "id": "room_02_password",
+      "time": "08:00",
+      "location": "Šatna zaměstnanců",
+      "storyIntro": "Kolega Petr nadává, že mu systém MYJYSK nechce vzít heslo \"Jysk2026\" a neví, co si dát, aby si to pamatoval.",
+      "learningPoint": "Pravidlo: Místo krátkých hesel používej heslovou frázi. Nejlépe 3 až 4 běžná slova oddělená pomlčkou, třeba Zluta-Kocka-Spinka.",
+      "challenge": {
+        "question": "Jakou metodu mu poradíš?",
+        "type": "multiple_choice",
+        "options": [
+          {
+            "id": "room_02_a",
+            "text": "A: Ať k původnímu heslu jen přidá vykřičník.",
+            "isCorrect": false,
+            "feedback": "Je super, že chceš pomoct. Samotný vykřičník ale moc nepomůže. Taková hesla se dají snadno odhadnout a lidé je pak často opakují všude."
+          },
+          {
+            "id": "room_02_b",
+            "text": "B: Ať použije rok narození a název prodejny.",
+            "isCorrect": false,
+            "feedback": "To se pamatuje snadno, ale bohužel se to i snadno uhodne. Osobní údaje do hesla nepatří."
+          },
+          {
+            "id": "room_02_c",
+            "text": "C: Ať spojí 3 až 4 běžná slova, třeba \"Zluta-Kocka-Spinka\".",
+            "isCorrect": true,
+            "feedback": "Skvělá rada. Dlouhá heslová fráze se pamatuje lépe a je bezpečnější než krátké kombinace."
+          },
+          {
+            "id": "room_02_d",
+            "text": "D: Ať vezme stejné heslo jako na sociální síť a změní jeden znak.",
+            "isCorrect": false,
+            "feedback": "Tohle je nebezpečné. Když unikne jedno heslo, útočník pak často zkouší stejné i v práci."
+          }
+        ]
+      }
+    },
+    {
+      "id": "room_03_call",
+      "time": "10:00",
+      "location": "Prodejna, pokladna",
+      "storyIntro": "Je velká fronta. Zvoní telefon a volající křičí: \"Tady centrála, máme kritickou chybu, okamžitě mi nadiktuj šestimístný kód, nebo se zablokuje prodej!\".",
+      "learningPoint": "Pravidlo: Když někdo tlačí na čas a chce kód, zastav se. Nadechni se a ověř to jinou cestou.",
+      "challenge": {
+        "question": "Co uděláš?",
+        "type": "multiple_choice",
+        "options": [
+          {
+            "id": "room_03_a",
+            "text": "A: Rychle nadiktuji kód, ať nezdržuju frontu.",
+            "isCorrect": false,
+            "feedback": "Chápu ten tlak, fronta je nepříjemná. Právě na stres ale podvodné telefonáty spoléhají. Kód by mohl dát cizímu člověku přístup do systému."
+          },
+          {
+            "id": "room_03_b",
+            "text": "B: Nejprve si nechám říct jméno, pak mu kód nadiktuji.",
+            "isCorrect": false,
+            "feedback": "I když se volající představí, pořád to může být podvod. Samotné jméno není ověření."
+          },
+          {
+            "id": "room_03_c",
+            "text": "C: Odmítnu to, hovor ukončím a ověřím požadavek přes vedoucího.",
+            "isCorrect": true,
+            "feedback": "Přesně tak. Zachoval/a jsi klid a ochránil/a provoz i data."
+          },
+          {
+            "id": "room_03_d",
+            "text": "D: Kód pošlu později zprávou, až se fronta zkrátí.",
+            "isCorrect": false,
+            "feedback": "Je dobře, že nechceš reagovat hned, ale kód se nesděluje ani později. Nejprve je potřeba požadavek ověřit."
+          }
+        ]
+      }
+    },
+    {
+      "id": "room_04_photo",
+      "time": "12:30",
+      "location": "Denní místnost",
+      "storyIntro": "Na obědě chce kolegyně Jana dát selfie na sociální síť. V pozadí je rozpis směn a pod monitorem leží klíče od skladu.",
+      "learningPoint": "Pravidlo: Na fotkách z práce nesmí být rozpisy směn, klíče ani jiné citlivé věci.",
+      "challenge": {
+        "question": "Jak zareaguješ?",
+        "type": "multiple_choice",
+        "options": [
+          {
+            "id": "room_04_a",
+            "text": "A: Nechám to být, je to jen obyčejná selfie.",
+            "isCorrect": false,
+            "feedback": "Rozumím, že je to jen běžná fotka. Jenže i v pozadí mohou být údaje, které někdo zneužije. Tady je vidět rozpis směn i klíče."
+          },
+          {
+            "id": "room_04_b",
+            "text": "B: Řeknu, že focení v práci je vždy zakázané.",
+            "isCorrect": false,
+            "feedback": "Oceňuji, že myslíš na bezpečnost. Úplný zákaz ale není vždy nutný. Důležité je odstranit citlivé věci z pozadí."
+          },
+          {
+            "id": "room_04_c",
+            "text": "C: Upozorním na rozpis a klíče, schováme je a fotku uděláme znovu.",
+            "isCorrect": true,
+            "feedback": "Skvělý postřeh. Přesně takhle se předchází zbytečnému riziku."
+          },
+          {
+            "id": "room_04_d",
+            "text": "D: Dáme fotku ven hned a pozadí upravíme později.",
+            "isCorrect": false,
+            "feedback": "To je risk. Jakmile je fotka zveřejněná, citlivé údaje už mohou být vidět a dál sdílené."
+          }
+        ]
+      }
+    },
+    {
+      "id": "room_05_email",
+      "time": "14:00",
+      "location": "Back Office PC",
+      "storyIntro": "Do firemní pošty přijde zpráva s požadavkem na rychlé potvrzení resetu BO. Vypadá naléhavě a chce akci hned.",
+      "learningPoint": "Pravidlo: Když zpráva tlačí na čas, má neznámou adresu webu nebo nečekanou přílohu, zastav se a ověř to s vedoucím.",
+      "challenge": {
+        "question": "Najdi 5 podezřelých věcí v e-mailu.",
+        "type": "red_flags",
+        "options": [
+          {
+            "id": "room_05_sender",
+            "text": "Adresa odesílatele bo-security@jysk-support.com",
+            "shortLabel": "adresa odesílatele",
+            "isCorrect": true,
+            "feedback": "Odesílatel nepoužívá běžnou firemní adresu. To je varování."
+          },
+          {
+            "id": "room_05_subject",
+            "text": "Předmět: potvrď do 15 minut",
+            "shortLabel": "předmět s časovým tlakem",
+            "isCorrect": true,
+            "feedback": "Nátlak na rychlou akci je typický znak podvodu."
+          },
+          {
+            "id": "room_05_pressure",
+            "text": "Věta: musíš potvrdit reset do 15 minut",
+            "shortLabel": "věta s nátlakem na čas",
+            "isCorrect": true,
+            "feedback": "Když tě někdo tlačí na čas, je potřeba zpomalit a ověřit."
+          },
+          {
+            "id": "room_05_link",
+            "text": "Odkaz: https://jysk-support-verify.com/bo-reset",
+            "shortLabel": "neznámá adresa webu v odkazu",
+            "isCorrect": true,
+            "feedback": "Adresa webu neodpovídá běžnému firemnímu prostředí. Neotvírat."
+          },
+          {
+            "id": "room_05_attachment",
+            "text": "Příloha: Reset_form.docm",
+            "shortLabel": "podezřelá příloha",
+            "isCorrect": true,
+            "feedback": "Nečekaná příloha je riziko. Otevření může spustit škodlivý program."
+          },
+          {
+            "id": "room_05_safe_note",
+            "text": "Věta: Pokud je to omyl, ověř u vedoucího.",
+            "shortLabel": "věta „ověř u vedoucího“",
+            "isCorrect": false,
+            "feedback": "Výborná reakce. Ověření s vedoucím je správný a bezpečný postup."
+          }
+        ],
+        "redFlagTask": {
+          "intro": "Přišel e-mail s potvrzením incidentu a požadavkem na rychlé potvrzení.",
+          "hint": "Klikni na podezřelé části zprávy. Hledej tlak na čas, cizí adresy a rizikovou přílohu.",
+          "targetCount": 5,
+          "header": {
+            "from": {
+              "text": "bo-security@jysk-support.com",
+              "optionId": "room_05_sender"
+            },
+            "subject": {
+              "text": "Reset hesla BO: potvrď do 15 minut",
+              "optionId": "room_05_subject"
+            },
+            "to": {
+              "text": "prodejna@jysk.cz"
+            }
+          },
+          "bodyLines": [
+            {
+              "id": "room_05_line_1",
+              "text": "Kvůli bezpečnostnímu incidentu musíš potvrdit reset do 15 minut.",
+              "optionId": "room_05_pressure",
+              "variant": "text"
+            },
+            {
+              "id": "room_05_line_2",
+              "text": "Potvrzení proveď zde:",
+              "variant": "text"
+            },
+            {
+              "id": "room_05_line_3",
+              "text": "https://jysk-support-verify.com/bo-reset",
+              "optionId": "room_05_link",
+              "variant": "link"
+            },
+            {
+              "id": "room_05_line_4",
+              "text": "Příloha Reset_form.docm",
+              "optionId": "room_05_attachment",
+              "variant": "attachment"
+            },
+            {
+              "id": "room_05_line_5",
+              "text": "Pokud je to omyl, ověř u vedoucího.",
+              "optionId": "room_05_safe_note",
+              "variant": "text"
+            }
+          ]
+        }
+      }
+    },
+    {
+      "id": "room_06_end_shift",
+      "time": "18:00",
+      "location": "Konec směny",
+      "storyIntro": "Jdeš domů. Vedlejší počítač je odemčený a pod klávesnicí je žlutý papírek s heslem.",
+      "learningPoint": "Pravidlo: Počítač se zamyká i na minutu. Hesla se nenechávají na papírku na stole.",
+      "challenge": {
+        "question": "Co s tím?",
+        "type": "multiple_choice",
+        "options": [
+          {
+            "id": "room_06_a",
+            "text": "A: Nechám to být, není to moje PC.",
+            "isCorrect": false,
+            "feedback": "Chápu, že nechceš zasahovat. Tady ale stačí minuta a může vzniknout škoda. Lepší je pomoci bezpečným krokem hned."
+          },
+          {
+            "id": "room_06_b",
+            "text": "B: Zamknu počítač (Win+L), papírek uklidím a informuji kolegu.",
+            "isCorrect": true,
+            "feedback": "Perfektní. Tím chráníš kolegu, data i celou směnu."
+          },
+          {
+            "id": "room_06_c",
+            "text": "C: Schovám papírek, ale počítač nechám odemčený.",
+            "isCorrect": false,
+            "feedback": "Dobré je, že řešíš heslo. Ještě chybí zamknout počítač, jinak zůstává přístup otevřený."
+          },
+          {
+            "id": "room_06_d",
+            "text": "D: Napíšu kolegovi zprávu a vyřešíme to až zítra.",
+            "isCorrect": false,
+            "feedback": "Je fajn dát vědět, ale čekání do zítřka je riziko. U odemčeného počítače je potřeba jednat hned."
+          }
+        ]
+      }
+    }
+  ],
+  "survey": {
+    "title": "Krátká anketa",
+    "subtitle": "Pomůže nám vylepšit další verzi kurzu.",
+    "questions": [
+      {
+        "id": "q1",
+        "label": "Jak užitečný byl kurz pro tvoji práci?",
+        "options": [
+          "Velmi užitečný",
+          "Spíše užitečný",
+          "Spíše méně",
+          "Nepřínosný"
+        ]
+      },
+      {
+        "id": "q2",
+        "label": "Jak srozumitelný byl obsah?",
+        "options": [
+          "Velmi srozumitelný",
+          "Spíše srozumitelný",
+          "Místy nejasný",
+          "Těžko srozumitelný"
+        ]
+      },
+      {
+        "id": "q3",
+        "label": "Jak moc odpovídaly situace realitě na směně?",
+        "options": [
+          "Velmi reálné",
+          "Spíše reálné",
+          "Spíše umělé",
+          "Nereálné"
+        ]
+      },
+      {
+        "id": "q4",
+        "label": "Jaká forma ti seděla nejvíc?",
+        "options": [
+          "Klikací scénáře",
+          "Krátké moduly",
+          "Oboje",
+          "Nevyhovuje"
+        ]
+      }
+    ]
+  }
+}
